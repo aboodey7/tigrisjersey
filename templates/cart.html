@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>السلة - دجلة ستور</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <h1>دجلة ستور</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('products') }}">المنتجات</a></li>
+    </ul>
+  </nav>
+
+  <section class="cart">
+    <h2>🛒 السلة</h2>
+
+    {% if products %}
+      <ul>
+        {% for product in products %}
+          <li>
+            {{ product.name }} - قياس: {{ product.size }} - السعر: {{ product.new_price }} د.ع
+            <form action="{{ url_for('remove_from_cart') }}" method="POST" style="display:inline;">
+              <input type="hidden" name="product_id" value="{{ product.id }}">
+              <button type="submit">❌ إزالة</button>
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <p><strong>المجموع الفرعي:</strong> {{ subtotal }} د.ع</p>
+      <p><strong>سعر التوصيل:</strong> {{ delivery_fee }} د.ع <span style="color: gray;">(رسوم ثابتة)</span></p>
+      <p><strong>المجموع الكلي:</strong> {{ total }} د.ع</p>
+
+      <form action="{{ url_for('checkout') }}" method="GET">
+        <button type="submit">📦 إتمام الطلب</button>
+      </form>
+
+    {% else %}
+      <p>السلة فارغة.</p>
+    {% endif %}
+  </section>
+
+</body>
+</html>

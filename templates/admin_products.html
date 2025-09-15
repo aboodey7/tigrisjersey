@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة الطلبات - دجلة ستور</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+    .order-card {
+      background-color: #fff;
+      border-left: 6px solid #28a745;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .order-card.pending {
+      border-left-color: #ffc107;
+    }
+    .order-card h3 {
+      margin-top: 0;
+    }
+    .order-card ul {
+      padding-right: 20px;
+    }
+    .order-card button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .order-card button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h1>لوحة الطلبات</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('admin_products') }}">المنتجات</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <h2>📋 الطلبات الواردة</h2>
+
+    {% if orders %}
+      {% for order in orders %}
+        <div class="order-card pending">
+          <h3>طلب من: {{ order.name }}</h3>
+          <p><strong>📞 الهاتف:</strong> {{ order.phone }}</p>
+          <p><strong>📍 العنوان:</strong> {{ order.address }}</p>
+          <p><strong>🛍️ المنتجات:</strong></p>
+          <ul>
+            {% for item in order.products %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+          <p><strong>💰 المجموع:</strong> {{ order.total }} د.ع</p>
+          <p><strong>🕒 وقت الطلب:</strong> {{ order.created_at }}</p>
+
+          <form action="{{ url_for('mark_delivered') }}" method="POST">
+            <input type="hidden" name="order_id" value="{{ order.id }}">
+            <button type="submit">✅ تم التوصيل</button>
+          </form>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>لا توجد طلبات حتى الآن.</p>
+    {% endif %}
+  </section>
+
+</body>
+</html>

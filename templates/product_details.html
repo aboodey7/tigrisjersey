@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تفاصيل المنتج - دجلة ستور</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <h1>دجلة ستور</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('products') }}">المنتجات</a></li>
+      <li><a href="{{ url_for('cart') }}">السلة</a></li>
+    </ul>
+  </nav>
+
+  <section class="product-details">
+    <div class="product-container">
+
+      <div class="product-images">
+        <img class="main-img" src="{{ url_for('static', filename='images/product1-main.jpg') }}" alt="صورة المنتج">
+        <div class="thumbs">
+          <img src="{{ url_for('static', filename='images/product1-1.jpg') }}" onclick="changeMainImage(this)">
+          <img src="{{ url_for('static', filename='images/product1-2.jpg') }}" onclick="changeMainImage(this)">
+          <img src="{{ url_for('static', filename='images/product1-3.jpg') }}" onclick="changeMainImage(this)">
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h2>{{ product.name }}</h2>
+        <p class="description">{{ product.description }}</p>
+        <p class="price">
+          <span class="old-price">{{ product.old_price }} د.ع</span>
+          <span class="new-price">{{ product.new_price }} د.ع</span>
+        </p>
+
+        <form action="{{ url_for('add_to_cart') }}" method="POST">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+
+          <label>اختر القياس:</label><br>
+{% if product.sizes %}
+  {% for size in product.sizes %}
+    <input type="radio" name="selected_size" value="{{ size }}" required> {{ size }}
+  {% endfor %}
+{% else %}
+  <p style="color: red;">هذا المنتج غير متوفر بأي قياس حالياً.</p>
+{% endif %}
+
+
+          <button type="submit">🛒 أضف إلى السلة</button>
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function changeMainImage(img) {
+      document.querySelector('.main-img').src = img.src;
+    }
+  </script>
+
+</body>
+</html>

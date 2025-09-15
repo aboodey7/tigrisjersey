@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إتمام الطلب - دجلة ستور</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <nav>
+    <h1>دجلة ستور</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('products') }}">المنتجات</a></li>
+      <li><a href="{{ url_for('cart') }}">السلة</a></li>
+    </ul>
+  </nav>
+
+  <section class="checkout">
+    <h2>📦 معلومات التوصيل</h2>
+    <form method="POST">
+      <label>الاسم :</label><br>
+      <input type="text" name="name" required><br><br>
+
+      <label>رقم الهاتف:</label><br>
+      <input type="text" name="phone" required><br><br>
+
+      <label>المحافظة:</label><br>
+      <input type="text" name="province" list="province-list" required placeholder="المحافظة">
+      <datalist id="province-list">
+        <option value="بغداد">
+        <option value="البصرة">
+        <option value="نينوى - الموصل">
+        <option value="كركوك">
+        <option value="أربيل">
+        <option value="الأنبار">
+        <option value="صلاح الدين">
+        <option value="ديالى">
+        <option value="بابل - الحلة">
+        <option value="كربلاء">
+        <option value="النجف">
+        <option value="المثنى - السماوة">
+        <option value="ذي قار - الناصرية">
+        <option value="واسط - الكوت">
+        <option value="ميسان - العمارة">
+        <option value="دهوك">
+        <option value="السليمانية">
+        <option value="القادسية - الديوانية">
+      </datalist><br><br>
+
+      <label>العنوان التفصيلي:</label><br>
+      <textarea name="address" rows="3" placeholder="المنطقة وأقرب نقطة دالة..." required></textarea><br><br>
+
+      <button type="submit">✅ إرسال الطلب</button>
+    </form>
+  </section>
+
+</body>
+</html>

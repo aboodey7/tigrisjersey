@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>لوحة الطلبات - دجلة ستور</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .new-order {
+      background-color: #ffeeba;
+      border: 1px solid #ffc107;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h1>لوحة الطلبات</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('admin_products') }}">المنتجات</a></li>
+    </ul>
+  </nav>
+
+  <section>
+    <h2>📋 الطلبات الواردة</h2>
+
+    {% if orders %}
+      {% for order in orders %}
+        <div class="new-order">
+          <p><strong>الاسم:</strong> {{ order.name }}</p>
+          <p><strong>الهاتف:</strong> {{ order.phone }}</p>
+          <p><strong>العنوان:</strong> {{ order.address }}</p>
+          <p><strong>المنتجات:</strong><br>
+            <ul>
+              {% for item in order.products %}
+                <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </p>
+          <p><strong>المجموع الكلي:</strong> {{ order.total }} د.ع</p>
+          <p><strong>وقت الطلب:</strong> {{ order.created_at }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>لا توجد طلبات حتى الآن.</p>
+    {% endif %}
+  </section>
+
+</body>
+</html>

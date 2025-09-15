@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>متجر الملابس الرياضية</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- 🔝 شريط التنقل -->
+  <nav>
+    <h1>SportWear</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+      <li><a href="{{ url_for('products') }}">المنتجات</a></li>
+      <li><a href="{{ url_for('cart') }}">السلة</a></li>
+    </ul>
+  </nav>
+
+  <!-- 🖼️ بنرات متغيرة -->
+  <section class="slider">
+    <div class="slides">
+      <img src="{{ url_for('static', filename='images/banner1.jpg') }}" alt="عرض خاص">
+      <img src="{{ url_for('static', filename='images/banner2.jpg') }}" alt="أحذية">
+    </div>
+  </section>
+
+  <!-- 🧭 الفئات -->
+  <section class="categories">
+    <h2>اختر الصنف</h2>
+    <div class="category-grid">
+      {% for category in categories %}
+        <div class="category-card" onclick="window.location.href='{{ url_for('products_by_category', category_name=category.name) }}'">
+          <img src="{{ url_for('static', filename='images/' + category.image) }}" alt="{{ category.name }}">
+          <h3>{{ category.name }}</h3>
+          <p>{{ category.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+<a href="{{ url_for('products') }}">المنتجات</a>
+</body>
+</html>
